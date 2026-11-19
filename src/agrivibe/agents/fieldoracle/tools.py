@@ -14,8 +14,8 @@ def format_passages(docs: list[Document]) -> str:
         docs: The retrieved chunks.
 
     Returns:
-        One block per chunk, headed by `[id] source, page N` so the model
-        has an exact id to cite.
+        One block per chunk, headed by its id and available source metadata so
+        the model has an exact id to cite.
     """
     if not docs:
         return "No passages found."
@@ -24,7 +24,11 @@ def format_passages(docs: list[Document]) -> str:
 
     for doc in docs:
         meta = doc.metadata
-        header = f"[{doc.id}] {meta['source']}, page {meta['page']}"
+        source = meta.get("source", "Unknown source")
+        page = meta.get("page")
+        header = f"[{doc.id}] {source}"
+        if page is not None:
+            header += f", page {page}"
         blocks.append(header + "\n" + doc.page_content)
         
     return "\n\n".join(blocks)

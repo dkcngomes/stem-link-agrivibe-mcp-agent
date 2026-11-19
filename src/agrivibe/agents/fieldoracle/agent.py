@@ -7,20 +7,14 @@ from agrivibe.agents.fieldoracle.tools import make_search_tool
 from agrivibe.agents.fieldoracle.schemas import CitedAnswer
 
 
-def build_fieldoracle_agent(
-    model: BaseChatModel, vector_store: VectorStore, k: int = 20
-):
-    
+def build_fieldoracle_agent(model: BaseChatModel, vector_store: VectorStore, k: int = 20):    
     agent = create_agent(
-        model=model,
-        tools=[make_search_tool(vector_store=vector_store, k=k)],
-        system_prompt=SYSTEM_PROMPT,
-        response_format=CitedAnswer,
-        name="FieldOracle",
-    )
-
+    model=model,
+    tools=[make_search_tool(vector_store=vector_store, k=k)],
+    system_prompt=SYSTEM_PROMPT,
+    response_format=CitedAnswer,
+    name="FieldOracle",)    
     return agent
-
 
 if __name__ == "__main__":
     from agrivibe.config import Settings
@@ -36,7 +30,7 @@ if __name__ == "__main__":
     )
 
     agent = build_fieldoracle_agent(model=model, vector_store=vector_store, k=5)
-
     question = "What is the best time to plant rice in Sri Lanka?"
+    
     answer = agent.invoke({"messages": [{"role": "user", "content": question}]})
     print(answer)
