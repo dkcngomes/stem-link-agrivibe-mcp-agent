@@ -19,11 +19,14 @@ def format_passages(docs: list[Document]) -> str:
     """
     if not docs:
         return "No passages found."
+    
     blocks = []
+
     for doc in docs:
         meta = doc.metadata
         header = f"[{doc.id}] {meta['source']}, page {meta['page']}"
         blocks.append(header + "\n" + doc.page_content)
+        
     return "\n\n".join(blocks)
 
 
@@ -31,16 +34,17 @@ def make_search_tool(vector_store: VectorStore, k: int):
 
     @tool(response_format="content_and_artifact")
     def search_knowledge(query: str, category: Category | None = None):
-        """Search the FieldOracle knowledge base for passages about a question.
+        """Search the FieldOracle knowledge base for *passages* about a question.
 
         Args:
             query: What to search for, written as a short search query, not the farmer's full message.
-            category: Limit the search to one document class. cultivation_guide covers how to grow a
-                crop. policy covers government circulars, subsidies and mandates. farm_record covers
-                what happened on a specific registered field. Leave empty to search everything.
+            category: Limit the search to one document class. 
+                cultivation_guide --> covers how to grow a crop.
+                policy -->  covers government circulars, subsidies and mandates. 
+                farm_record --> covers what happened on a specific registered field. Leave empty to search everything.
 
         Returns:
-            The passages as text for the model.
+            The *passages* as text for the model.
         """
         docs = [
             doc

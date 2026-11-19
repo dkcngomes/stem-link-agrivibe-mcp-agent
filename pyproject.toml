@@ -1,5 +1,5 @@
 [project]
-name = "stem_link_agrivibe"
+name = "agrivibe"
 version = "0.1.0"
 description = "A system to help farmers manage their crops and livestock efficiently."
 authors = [

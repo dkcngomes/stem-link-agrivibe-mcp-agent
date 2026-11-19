@@ -13,15 +13,16 @@ Category = Literal["cultivation_guide", "policy", "farm_record"]
 
 
 def create_vector_store(settings: Settings) -> PineconeVectorStore:
+
     embeddings = OpenAIEmbeddings(
         model=settings.embedding_model,
         api_key=settings.openai_api_key.get_secret_value(),
     )
 
-    pc = Pinecone(api_key=settings.pinecone_api_key.get_secret_value())
+    pine_cone = Pinecone(api_key=settings.pinecone_api_key.get_secret_value())
 
-    if not pc.has_index(settings.pinecone_index):
-        pc.create_index(
+    if not pine_cone.has_index(settings.pinecone_index):
+        pine_cone.create_index(
             name=settings.pinecone_index,
             dimension=settings.embedding_dimension,
             metric="cosine",
@@ -40,7 +41,9 @@ def create_vector_store(settings: Settings) -> PineconeVectorStore:
 def search_chunks(
     vector_store: VectorStore, query: str, k: int, category: Category | None = None
 ) -> list[tuple[Document, float]]:
+    
     search_filter = {"category": category} if category else None
+    
     return vector_store.similarity_search_with_score(
         query=query, k=k, filter=search_filter
     )
