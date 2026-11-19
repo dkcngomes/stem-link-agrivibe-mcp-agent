@@ -7,7 +7,7 @@ from langchain_pinecone import PineconeVectorStore
 from langchain_openai import OpenAIEmbeddings
 from pinecone import Pinecone, ServerlessSpec
 
-from stem_link_agri_vibe.config import Settings
+from agrivibe.config import Settings
 
 Category = Literal["cultivation_guide", "policy", "farm_record"]
 

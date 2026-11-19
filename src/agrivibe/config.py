@@ -3,10 +3,11 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
 
-    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8") #pydantic setting manager lib
+    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 
     openai_api_key: SecretStr
     pinecone_api_key: SecretStr
+    ntfy_topic: str | None = None
 
     chat_model: str = "openai:gpt-5.6-terra"
     embedding_model: str = "text-embedding-3-small"
