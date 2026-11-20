@@ -30,7 +30,5 @@ def get_knowledge_service() -> KnowledgeService:
 @lru_cache
 def get_answer_service() -> AnswerService:
     settings = get_settings()
-    rag_agent = build_fieldoracle_agent(
-        create_chat_model(settings), get_vector_store(), k=settings.search_k
-    )
+    rag_agent = build_fieldoracle_agent(create_chat_model(settings), get_vector_store(), k=settings.search_k)
     return AnswerService(rag_agent)

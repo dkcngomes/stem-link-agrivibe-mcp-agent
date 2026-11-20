@@ -37,10 +37,10 @@ def search_queries(messages: list[BaseMessage]) -> list[str]:
     """
     return [
         call["args"]["query"]
-        for message in messages
-        if isinstance(message, AIMessage)
-        for call in message.tool_calls
-        if call["name"] == "search_knowledge"
+            for message in messages
+            if isinstance(message, AIMessage)
+                for call in message.tool_calls
+            if call["name"] == "search_knowledge"
     ]
 
 """
