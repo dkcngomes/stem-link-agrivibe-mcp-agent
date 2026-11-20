@@ -1,6 +1,6 @@
 from langchain_core.vectorstores import VectorStore
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_core.documents import Document
+
 
 from agrivibe.db.vectorstore import Category, search_chunks
 from agrivibe.models.knowledge import IndexResponse, SearchResponse, SearchHit

@@ -1,9 +1,11 @@
 
 import re
 import hashlib
+
 from io import BytesIO
 from pathlib import Path
 from pypdf import PdfReader
+from langchain_core.documents import Document
 
 def make_doc_id(filename: str, data: bytes) -> str:
     """Builds a stable id for a document from its name and contents.
@@ -29,10 +31,10 @@ def read_pdf(data: bytes, metadata: dict) -> list[Document]:
 
     return [
         Document(
-            page_content=page.extract_text(), metadata={**metadata, "page": number}
+            page_content=text, metadata={**metadata, "page": number}
         )
         for number, page in enumerate(pdf.pages, start=1)
-        if (page.extract_text() or "").strip()
+        if (text := page.extract_text()) and text.strip() #Wulrus Operator ' := '
     ]
 
 
